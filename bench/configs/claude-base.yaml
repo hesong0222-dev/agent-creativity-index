@@ -1,0 +1,6 @@
+# Baseline: Claude Code headless with none of the user's global settings, plugins, or MCP servers.
+name: claude-base
+cmd: >-
+  claude -p --setting-sources project --strict-mcp-config
+  --dangerously-skip-permissions < {prompt_file}
+timeout: 900

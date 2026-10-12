@@ -1,0 +1,6 @@
+# Identical to claude-base, under another name, for the A/A sanity check.
+name: claude-base-copy
+cmd: >-
+  claude -p --setting-sources project --strict-mcp-config
+  --dangerously-skip-permissions < {prompt_file}
+timeout: 900

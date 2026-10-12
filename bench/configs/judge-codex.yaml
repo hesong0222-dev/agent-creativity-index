@@ -1,0 +1,6 @@
+# Judge from a different model family than the Claude agents under test.
+name: codex
+cmd: >-
+  codex exec --skip-git-repo-check --ephemeral -s read-only
+  -o {verdict_file} - < {judge_prompt_file}
+timeout: 300
