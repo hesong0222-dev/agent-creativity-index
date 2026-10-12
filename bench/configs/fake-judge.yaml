@@ -1,0 +1,5 @@
+# Zero-cost self-test judge: always prefers response 1, so swapped judging yields ties.
+name: fake-judge
+cmd: >-
+  echo '{"winner": 1, "reason": "always picks the first response"}'
+timeout: 30

@@ -1,0 +1,4 @@
+# Zero-cost self-test agent: copies the prompt into the expected output file.
+name: fake-agent
+cmd: mkdir -p "$(dirname {output})" && cp {prompt_file} {output}
+timeout: 30
