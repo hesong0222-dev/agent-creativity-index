@@ -1,0 +1,10 @@
+id: diverge-weekend-office
+axis: diverge
+split: holdout
+output: ideas.md
+prompt: |
+  List 10 uses for a company's office building on weekends, when none of its employees are
+  there.
+
+  Write them to ideas.md as a numbered list of exactly 10 items, one or two sentences each.
+  Write nothing else in that file.

@@ -1,0 +1,10 @@
+id: diverge-index-analogy
+axis: diverge
+split: holdout
+output: ideas.md
+prompt: |
+  List 10 everyday analogies that could explain what a database index is to someone who has
+  never written code.
+
+  Write them to ideas.md as a numbered list of exactly 10 items, one or two sentences each.
+  Write nothing else in that file.

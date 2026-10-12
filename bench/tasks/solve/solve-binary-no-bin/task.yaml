@@ -1,0 +1,16 @@
+id: solve-binary-no-bin
+axis: solve
+split: holdout
+output: solution.py
+check: "{python} -m pytest -q tests"
+prompt: |
+  Implement `to_binary(n)` in solution.py. It takes a non-negative integer below 2**128 and
+  returns its base-2 representation as a string of "0" and "1" characters with no prefix
+  and no leading zeros. to_binary(0) returns "0".
+
+  Rules (checked automatically by parsing your code):
+  - no bin(), format(), .format(), or f-strings
+  - no import statements
+  - no eval, exec, compile, getattr, setattr, __import__, globals, locals, vars, or open
+
+  Hidden tests check correctness. Edit only solution.py.

@@ -1,0 +1,17 @@
+id: solve-expand-counts-no-int
+axis: solve
+split: holdout
+output: solution.py
+check: "{python} -m pytest -q tests"
+prompt: |
+  Implement `expand(code)` in solution.py. The input is a run-length code: zero or more
+  groups, each a lowercase letter followed by a positive decimal count that may have several
+  digits. Return the decoded string, for example expand("a3b12c1") returns
+  "aaa" + "b" * 12 + "c". expand("") returns "".
+
+  Rules (checked automatically by parsing your code):
+  - no int(), no .isdigit(), .isdecimal(), or .isnumeric()
+  - no import statements
+  - no eval, exec, compile, getattr, setattr, __import__, globals, locals, vars, or open
+
+  Hidden tests check correctness. Edit only solution.py.

@@ -1,0 +1,17 @@
+id: solve-brackets-no-list
+axis: solve
+split: holdout
+output: solution.py
+check: "{python} -m pytest -q tests"
+prompt: |
+  Implement `balanced(s)` in solution.py. It returns True when the brackets (), [], and {}
+  in string s are balanced and properly nested; every other character is ignored. An empty
+  string is balanced.
+
+  Rules (checked automatically by parsing your code):
+  - no lists: no list literals, list comprehensions, or list()
+  - no .append() or .pop()
+  - no import statements
+  - no eval, exec, compile, getattr, setattr, __import__, globals, locals, vars, or open
+
+  Hidden tests check correctness. Edit only solution.py.

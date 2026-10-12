@@ -1,0 +1,16 @@
+id: solve-merge-no-sort
+axis: solve
+split: holdout
+output: solution.py
+check: "{python} -m pytest -q tests"
+prompt: |
+  Implement `merge(a, b)` in solution.py. It takes two lists of integers, each already in
+  ascending order (either may be empty), and returns one list with all of their elements in
+  ascending order. The input lists must not be modified.
+
+  Rules (checked automatically by parsing your code):
+  - no sorted(), .sort(), min(), or max()
+  - no import statements
+  - no eval, exec, compile, getattr, setattr, __import__, globals, locals, vars, or open
+
+  Hidden tests check correctness. Edit only solution.py.

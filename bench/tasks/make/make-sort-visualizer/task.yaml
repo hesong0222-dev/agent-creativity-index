@@ -1,0 +1,12 @@
+id: make-sort-visualizer
+axis: make
+split: holdout
+output: sort.html
+prompt: |
+  Make a web page that shows, step by step, how bubble sort orders a row of numbers. Save it
+  as sort.html.
+
+  Requirements:
+  - one self-contained HTML file with no external resources (no CDNs, remote images, or fonts)
+  - a Step button advances one comparison at a time, and a Reset button starts over
+  - the two values being compared are visibly highlighted

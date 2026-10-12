@@ -1,0 +1,10 @@
+id: diverge-pool-crowd
+axis: diverge
+split: holdout
+output: ideas.md
+prompt: |
+  A town's public swimming pool had twice as many visitors this summer as last summer, with
+  no change in price, opening hours, or weather. List 10 distinct explanations.
+
+  Write them to ideas.md as a numbered list of exactly 10 items, one or two sentences each.
+  Write nothing else in that file.

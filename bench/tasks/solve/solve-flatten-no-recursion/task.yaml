@@ -1,0 +1,17 @@
+id: solve-flatten-no-recursion
+axis: solve
+split: holdout
+output: solution.py
+check: "{python} -m pytest -q tests"
+prompt: |
+  Implement `flatten(nested)` in solution.py. It takes a list whose elements are integers or
+  lists of the same kind, nested to any depth up to 50, and returns a flat list of all the
+  integers in left-to-right order. Empty lists contribute nothing.
+
+  Rules (checked automatically by parsing your code):
+  - solution.py defines exactly one function, `flatten`, and no classes or lambdas
+  - the name `flatten` is never used inside the code (so no recursion)
+  - no import statements
+  - no eval, exec, compile, getattr, setattr, __import__, globals, locals, vars, or open
+
+  Hidden tests check correctness. Edit only solution.py.

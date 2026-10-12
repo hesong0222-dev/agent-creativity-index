@@ -1,0 +1,12 @@
+id: make-dialogue-only
+axis: make
+split: holdout
+output: dialogue.md
+prompt: |
+  Write a short story told entirely through dialogue between two people on a night train.
+  Save it as dialogue.md.
+
+  Requirements:
+  - 200 to 300 words
+  - no narration: every line is spoken, prefixed with the speaker's name and a colon
+  - the last line changes the meaning of an earlier one

@@ -1,0 +1,11 @@
+id: make-stapler-label
+axis: make
+split: holdout
+output: label.md
+prompt: |
+  Write the museum wall label for an exhibit whose only object is an ordinary office stapler,
+  presented as an important historical artifact. Save it as label.md.
+
+  Requirements:
+  - 120 to 180 words, not counting the heading lines
+  - starts with a title line, a date line, and a materials line, in that order

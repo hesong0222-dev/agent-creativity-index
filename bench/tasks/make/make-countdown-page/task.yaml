@@ -1,0 +1,12 @@
+id: make-countdown-page
+axis: make
+split: holdout
+output: countdown.html
+prompt: |
+  Make a web page that counts down to a fictional event of your choosing. Save it as
+  countdown.html.
+
+  Requirements:
+  - one self-contained HTML file with no external resources (no CDNs, remote images, or fonts)
+  - the countdown updates every second
+  - it is readable on a 360px-wide phone screen

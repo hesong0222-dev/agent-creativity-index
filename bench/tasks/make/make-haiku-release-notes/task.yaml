@@ -1,0 +1,12 @@
+id: make-haiku-release-notes
+axis: make
+split: holdout
+output: notes.txt
+prompt: |
+  Write the release notes for a new version of a fictional to-do list app as a series of
+  haiku. Save them as notes.txt.
+
+  Requirements:
+  - exactly 5 haiku, separated by one blank line
+  - each haiku has three lines of 5, 7, and 5 syllables
+  - each haiku describes a different change in the release

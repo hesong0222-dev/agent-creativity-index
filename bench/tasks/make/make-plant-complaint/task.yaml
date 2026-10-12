@@ -1,0 +1,12 @@
+id: make-plant-complaint
+axis: make
+split: holdout
+output: letter.md
+prompt: |
+  Write a letter of complaint from a houseplant to the person who owns it. Save it as
+  letter.md.
+
+  Requirements:
+  - 200 to 300 words
+  - at least three specific grievances
+  - ends with a sign-off and the plant's name

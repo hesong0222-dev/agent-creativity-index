@@ -1,0 +1,17 @@
+id: solve-dedupe-no-set
+axis: solve
+split: holdout
+output: solution.py
+check: "{python} -m pytest -q tests"
+prompt: |
+  Implement `unique(items)` in solution.py. It takes a list of up to 5,000 integers and
+  returns a new list with duplicates removed, keeping the first occurrence of each value in
+  its original order.
+
+  Rules (checked automatically by parsing your code):
+  - no set() or frozenset(), no set literals or set comprehensions
+  - no dict.fromkeys()
+  - no import statements
+  - no eval, exec, compile, getattr, setattr, __import__, globals, locals, vars, or open
+
+  Hidden tests check correctness. Edit only solution.py.

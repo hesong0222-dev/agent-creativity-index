@@ -1,0 +1,12 @@
+id: make-six-word-town
+axis: make
+split: holdout
+output: stories.txt
+prompt: |
+  Write ten six-word stories that all take place in the same small town. Save them as
+  stories.txt.
+
+  Requirements:
+  - exactly 10 lines, one story per line
+  - each line is exactly six words
+  - at least one character or place appears in more than one story

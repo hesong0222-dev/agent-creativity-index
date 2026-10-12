@@ -1,0 +1,16 @@
+id: solve-digit-sum-no-str
+axis: solve
+split: holdout
+output: solution.py
+check: "{python} -m pytest -q tests"
+prompt: |
+  Implement `digit_sum(n)` in solution.py. It takes a non-negative integer (possibly with
+  hundreds of digits) and returns the sum of its decimal digits. digit_sum(0) returns 0.
+
+  Rules (checked automatically by parsing your code):
+  - no str(), repr(), ascii(), format(), .format(), f-strings, or the % operator
+  - no __str__, __repr__, or __format__ attributes
+  - no import statements
+  - no eval, exec, compile, getattr, setattr, __import__, globals, locals, vars, or open
+
+  Hidden tests check correctness. Edit only solution.py.

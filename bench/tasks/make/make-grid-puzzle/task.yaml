@@ -1,0 +1,11 @@
+id: make-grid-puzzle
+axis: make
+split: holdout
+output: game.html
+prompt: |
+  Make a browser puzzle game played only by clicking cells on a grid. Save it as game.html.
+
+  Requirements:
+  - one self-contained HTML file with no external resources (no CDNs, remote images, or fonts)
+  - the puzzle can be solved, and the game says so when it is
+  - a move counter is shown on screen

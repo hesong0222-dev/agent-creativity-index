@@ -1,0 +1,15 @@
+id: solve-gcd-no-modulo
+axis: solve
+split: holdout
+output: solution.py
+check: "{python} -m pytest -q tests"
+prompt: |
+  Implement `gcd(a, b)` in solution.py. It takes two positive integers, each at most
+  1,000,000, and returns their greatest common divisor.
+
+  Rules (checked automatically by parsing your code):
+  - no % or // operators, no divmod()
+  - no import statements
+  - no eval, exec, compile, getattr, setattr, __import__, globals, locals, vars, or open
+
+  Hidden tests check correctness. Edit only solution.py.

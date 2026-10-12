@@ -1,0 +1,17 @@
+id: solve-top-word-no-dict
+axis: solve
+split: holdout
+output: solution.py
+check: "{python} -m pytest -q tests"
+prompt: |
+  Implement `top_word(text)` in solution.py. The text contains lowercase words separated by
+  one or more spaces, with at least one word. Return the word that occurs most often; if
+  several words tie, return the one whose first occurrence comes earliest in the text.
+
+  Rules (checked automatically by parsing your code):
+  - no dictionaries: no dict(), dict literals, or dict comprehensions
+  - no .count()
+  - no import statements
+  - no eval, exec, compile, getattr, setattr, __import__, globals, locals, vars, or open
+
+  Hidden tests check correctness. Edit only solution.py.

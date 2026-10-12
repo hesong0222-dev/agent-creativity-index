@@ -1,0 +1,12 @@
+id: make-stuck-elevator
+axis: make
+split: holdout
+output: story.md
+prompt: |
+  Write a short story set entirely inside an elevator stuck between two floors. Save it as
+  story.md.
+
+  Requirements:
+  - 300 to 400 words
+  - exactly two characters
+  - the story ends when the doors open

@@ -1,0 +1,10 @@
+id: diverge-signup-drop
+axis: diverge
+split: holdout
+output: ideas.md
+prompt: |
+  A website's daily sign-ups fell by half overnight, yet its traffic, error rates, and page
+  load times look exactly the same as the day before. List 10 distinct hypotheses for the cause.
+
+  Write them to ideas.md as a numbered list of exactly 10 items, one or two sentences each.
+  Write nothing else in that file.

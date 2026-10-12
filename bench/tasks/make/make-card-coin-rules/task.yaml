@@ -1,0 +1,11 @@
+id: make-card-coin-rules
+axis: make
+split: holdout
+output: rules.md
+prompt: |
+  Design a two-player game that needs only a standard deck of playing cards and one coin,
+  and write its rules. Save them as rules.md.
+
+  Requirements:
+  - sections for setup, a turn, and how to win
+  - under 350 words

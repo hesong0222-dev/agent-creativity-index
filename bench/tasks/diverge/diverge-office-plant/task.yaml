@@ -1,0 +1,10 @@
+id: diverge-office-plant
+axis: diverge
+split: holdout
+output: ideas.md
+prompt: |
+  The plant in a shared office keeps dying, even though everyone on the team says they water it
+  regularly. List 10 distinct hypotheses for what is going on.
+
+  Write them to ideas.md as a numbered list of exactly 10 items, one or two sentences each.
+  Write nothing else in that file.

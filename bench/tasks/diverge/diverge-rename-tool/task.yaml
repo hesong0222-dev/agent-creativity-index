@@ -1,0 +1,10 @@
+id: diverge-rename-tool
+axis: diverge
+split: holdout
+output: ideas.md
+prompt: |
+  List 10 names for a command-line tool that renames many files at once, each with a short
+  reason for the name.
+
+  Write them to ideas.md as a numbered list of exactly 10 items, one or two sentences each.
+  Write nothing else in that file.

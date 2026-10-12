@@ -1,0 +1,9 @@
+id: diverge-live-alone
+axis: diverge
+split: holdout
+output: ideas.md
+prompt: |
+  List 10 product ideas for people over 70 who live alone, none of which involves a screen.
+
+  Write them to ideas.md as a numbered list of exactly 10 items, one or two sentences each.
+  Write nothing else in that file.

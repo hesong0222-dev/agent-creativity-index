@@ -1,0 +1,17 @@
+id: solve-roman-no-loops
+axis: solve
+split: holdout
+output: solution.py
+check: "{python} -m pytest -q tests"
+prompt: |
+  Implement `to_roman(n)` in solution.py. It takes an integer from 1 to 3999 and returns its
+  standard Roman numeral using I, V, X, L, C, D, M with subtractive pairs (IV, IX, XL, XC,
+  CD, CM). For example, to_roman(1994) returns "MCMXCIV".
+
+  Rules (checked automatically by parsing your code):
+  - no for or while loops
+  - no comprehensions or generator expressions
+  - no import statements
+  - no eval, exec, compile, getattr, setattr, __import__, globals, locals, vars, or open
+
+  Hidden tests check correctness. Edit only solution.py.

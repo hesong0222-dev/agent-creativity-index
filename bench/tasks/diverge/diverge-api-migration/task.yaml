@@ -1,0 +1,10 @@
+id: diverge-api-migration
+axis: diverge
+split: holdout
+output: ideas.md
+prompt: |
+  List 10 ways to get the users of an old version of a public web API to move to the new
+  version without ever shutting the old one down.
+
+  Write them to ideas.md as a numbered list of exactly 10 items, one or two sentences each.
+  Write nothing else in that file.

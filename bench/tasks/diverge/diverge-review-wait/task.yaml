@@ -1,0 +1,10 @@
+id: diverge-review-wait
+axis: diverge
+split: holdout
+output: ideas.md
+prompt: |
+  List 10 ways to cut how long code changes wait for review on a team, without adding more
+  reviewers.
+
+  Write them to ideas.md as a numbered list of exactly 10 items, one or two sentences each.
+  Write nothing else in that file.

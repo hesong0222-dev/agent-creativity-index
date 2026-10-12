@@ -1,0 +1,10 @@
+id: diverge-shorter-meeting
+axis: diverge
+split: holdout
+output: ideas.md
+prompt: |
+  List 10 ways to make a weekly one-hour team meeting shorter without cancelling it or
+  removing anyone from the invite.
+
+  Write them to ideas.md as a numbered list of exactly 10 items, one or two sentences each.
+  Write nothing else in that file.

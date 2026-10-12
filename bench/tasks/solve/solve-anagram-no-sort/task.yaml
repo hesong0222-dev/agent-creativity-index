@@ -1,0 +1,16 @@
+id: solve-anagram-no-sort
+axis: solve
+split: holdout
+output: solution.py
+check: "{python} -m pytest -q tests"
+prompt: |
+  Implement `is_anagram(a, b)` in solution.py. It returns True when string b uses exactly the
+  same characters as string a, each the same number of times, in any order. Comparison is
+  case-sensitive and every character counts, including spaces and punctuation.
+
+  Rules (checked automatically by parsing your code):
+  - no sorted() or .sort()
+  - no import statements
+  - no eval, exec, compile, getattr, setattr, __import__, globals, locals, vars, or open
+
+  Hidden tests check correctness. Edit only solution.py.

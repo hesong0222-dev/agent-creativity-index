@@ -1,0 +1,10 @@
+id: diverge-bakery-tests
+axis: diverge
+split: holdout
+output: ideas.md
+prompt: |
+  List 10 cheap experiments a small neighborhood bakery could run within one month to learn
+  what makes customers come back.
+
+  Write them to ideas.md as a numbered list of exactly 10 items, one or two sentences each.
+  Write nothing else in that file.

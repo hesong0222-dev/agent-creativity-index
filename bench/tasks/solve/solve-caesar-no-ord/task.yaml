@@ -1,0 +1,18 @@
+id: solve-caesar-no-ord
+axis: solve
+split: holdout
+output: solution.py
+check: "{python} -m pytest -q tests"
+prompt: |
+  Implement `shift(text, k)` in solution.py. Every lowercase letter a-z in text moves k places
+  forward in the alphabet, wrapping around from z to a; k may be any integer, including
+  negative or larger than 26. Every other character is left unchanged.
+  For example, shift("xyz!", 3) returns "abc!".
+
+  Rules (checked automatically by parsing your code):
+  - no ord() or chr()
+  - no .translate() or .maketrans()
+  - no import statements
+  - no eval, exec, compile, getattr, setattr, __import__, globals, locals, vars, or open
+
+  Hidden tests check correctness. Edit only solution.py.

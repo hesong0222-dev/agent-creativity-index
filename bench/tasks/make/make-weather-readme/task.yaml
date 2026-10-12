@@ -1,0 +1,11 @@
+id: make-weather-readme
+axis: make
+split: holdout
+output: README.md
+prompt: |
+  Write the README for a fictional software library that controls the weather inside a
+  single room. Save it as README.md.
+
+  Requirements:
+  - includes an Installation section and at least two code examples
+  - under 400 words

@@ -1,0 +1,12 @@
+id: make-pointer-art
+axis: make
+split: holdout
+output: toy.html
+prompt: |
+  Make a browser toy that turns mouse or touch movement into generative art. Save it as
+  toy.html.
+
+  Requirements:
+  - one self-contained HTML file with no external resources (no CDNs, remote images, or fonts)
+  - it draws on a <canvas> element
+  - a button clears the drawing
