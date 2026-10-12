@@ -1,0 +1,11 @@
+id: make-repair-landing
+axis: make
+split: holdout
+output: index.html
+prompt: |
+  Design a landing page for a shop that repairs time machines. Save it as index.html.
+
+  Requirements:
+  - one self-contained HTML file with no external resources
+  - a headline, a list of services, and a way to contact the shop
+  - it is readable on a 360px-wide phone screen

@@ -1,0 +1,11 @@
+id: make-typing-game
+axis: make
+split: holdout
+output: game.html
+prompt: |
+  Make a browser game in which the player must type to play. Save it as game.html.
+
+  Requirements:
+  - one self-contained HTML file with no external resources (no CDNs, remote images, or fonts)
+  - the game has a goal and a way to win or lose
+  - instructions appear on screen

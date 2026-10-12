@@ -1,0 +1,10 @@
+id: make-last-backup
+axis: make
+split: holdout
+output: story.md
+prompt: |
+  Write a short story about the last working backup on Earth. Save it as story.md.
+
+  Requirements:
+  - 250 to 350 words
+  - the story has an ending

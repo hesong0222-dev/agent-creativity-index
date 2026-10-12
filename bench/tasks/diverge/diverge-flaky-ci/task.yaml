@@ -1,0 +1,10 @@
+id: diverge-flaky-ci
+axis: diverge
+split: dev
+output: ideas.md
+prompt: |
+  A test passes on every developer's laptop but fails in CI, and only on Tuesdays.
+  List 10 distinct hypotheses for the cause.
+
+  Write them to ideas.md as a numbered list of exactly 10 items, one or two sentences each.
+  Write nothing else in that file.

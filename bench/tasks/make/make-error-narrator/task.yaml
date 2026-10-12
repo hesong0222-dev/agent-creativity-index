@@ -1,0 +1,11 @@
+id: make-error-narrator
+axis: make
+split: dev
+output: story.md
+prompt: |
+  Write a short story narrated by a compiler error message. Save it as story.md.
+
+  Requirements:
+  - 250 to 350 words
+  - the narrator is the error message itself
+  - the story has an ending

@@ -1,0 +1,9 @@
+id: diverge-git-uses
+axis: diverge
+split: dev
+output: ideas.md
+prompt: |
+  List 10 uses for a git repository other than tracking the history of source code.
+
+  Write them to ideas.md as a numbered list of exactly 10 items, one or two sentences each.
+  Write nothing else in that file.

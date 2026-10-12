@@ -1,0 +1,11 @@
+id: make-git-log-poem
+axis: make
+split: dev
+output: poem.txt
+prompt: |
+  Write a poem in the form of `git log --oneline` output. Save it as poem.txt.
+
+  Requirements:
+  - exactly 12 lines
+  - each line is a 7-character lowercase hexadecimal hash, one space, then a commit message
+  - read from top to bottom, the lines tell a story

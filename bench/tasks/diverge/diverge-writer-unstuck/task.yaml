@@ -1,0 +1,10 @@
+id: diverge-writer-unstuck
+axis: diverge
+split: holdout
+output: ideas.md
+prompt: |
+  List 10 features a text editor could have to help a stuck writer, none of which
+  generate text with AI.
+
+  Write them to ideas.md as a numbered list of exactly 10 items, one or two sentences each.
+  Write nothing else in that file.

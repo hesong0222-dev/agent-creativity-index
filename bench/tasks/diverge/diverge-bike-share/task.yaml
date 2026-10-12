@@ -1,0 +1,10 @@
+id: diverge-bike-share
+axis: diverge
+split: holdout
+output: ideas.md
+prompt: |
+  A city added 30% more shared bikes, and total rides went down. List 10 distinct
+  hypotheses for why.
+
+  Write them to ideas.md as a numbered list of exactly 10 items, one or two sentences each.
+  Write nothing else in that file.

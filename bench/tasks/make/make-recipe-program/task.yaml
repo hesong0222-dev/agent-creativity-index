@@ -1,0 +1,11 @@
+id: make-recipe-program
+axis: make
+split: holdout
+output: recipe.md
+prompt: |
+  Write a recipe that is also a program: a real dish whose instructions are written as
+  pseudocode with functions, loops, or conditionals. Save it as recipe.md.
+
+  Requirements:
+  - a person could actually cook the dish by following it
+  - the ingredients are listed with quantities

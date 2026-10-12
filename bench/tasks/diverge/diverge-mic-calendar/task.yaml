@@ -1,0 +1,9 @@
+id: diverge-mic-calendar
+axis: diverge
+split: dev
+output: ideas.md
+prompt: |
+  List 10 product ideas that use only two things: a microphone and a calendar API.
+
+  Write them to ideas.md as a numbered list of exactly 10 items, one or two sentences each.
+  Write nothing else in that file.

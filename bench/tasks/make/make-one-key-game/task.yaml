@@ -1,0 +1,11 @@
+id: make-one-key-game
+axis: make
+split: dev
+output: game.html
+prompt: |
+  Make a browser game played with only the space bar. Save it as game.html.
+
+  Requirements:
+  - one self-contained HTML file with no external resources (no CDNs, remote images, or fonts)
+  - the game has a goal and a way to win or lose
+  - instructions appear on screen

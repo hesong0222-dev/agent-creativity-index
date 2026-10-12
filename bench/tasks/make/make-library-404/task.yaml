@@ -1,0 +1,11 @@
+id: make-library-404
+axis: make
+split: dev
+output: 404.html
+prompt: |
+  Design the 404 "page not found" page for a public library's website. Save it as 404.html.
+
+  Requirements:
+  - one self-contained HTML file with no external resources
+  - it includes a link back to the home page (href="/")
+  - it is readable on a 360px-wide phone screen

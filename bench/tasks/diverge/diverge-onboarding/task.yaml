@@ -1,0 +1,10 @@
+id: diverge-onboarding
+axis: diverge
+split: dev
+output: ideas.md
+prompt: |
+  List 10 ways to help a new engineer learn a large, unfamiliar codebase in their first
+  week without writing any documentation.
+
+  Write them to ideas.md as a numbered list of exactly 10 items, one or two sentences each.
+  Write nothing else in that file.

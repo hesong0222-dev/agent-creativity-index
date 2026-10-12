@@ -1,0 +1,9 @@
+id: diverge-one-pixel
+axis: diverge
+split: holdout
+output: ideas.md
+prompt: |
+  List 10 uses for a 1x1 pixel image in software.
+
+  Write them to ideas.md as a numbered list of exactly 10 items, one or two sentences each.
+  Write nothing else in that file.
