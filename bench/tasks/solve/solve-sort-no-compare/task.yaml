@@ -1,0 +1,15 @@
+id: solve-sort-no-compare
+axis: solve
+split: dev
+output: solution.py
+check: "{python} -m pytest -q tests"
+prompt: |
+  Implement `sort_numbers(nums)` in solution.py. It takes a list of up to 10,000 integers,
+  each between 0 and 1000 inclusive, and returns them in ascending order.
+
+  Rules (checked automatically by parsing your code):
+  - no comparison operators at all (<, >, <=, >=, ==, !=, in, not in, is, is not)
+  - no sorted(), .sort(), min(), or max()
+  - no import statements
+
+  Hidden tests check correctness. Edit only solution.py.

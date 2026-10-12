@@ -1,0 +1,14 @@
+id: solve-add-no-arithmetic
+axis: solve
+split: holdout
+output: solution.py
+check: "{python} -m pytest -q tests"
+prompt: |
+  Implement `add(a, b)` in solution.py for integers 0 <= a, b <= 1,000,000. Return a + b.
+
+  Rules (checked automatically by parsing your code):
+  - no arithmetic operators: +, -, *, /, //, %, ** (including +=, -= and unary minus)
+  - no sum(), and no attribute whose name contains "add" or "sub" (such as __add__)
+  - no import statements
+
+  Hidden tests check correctness. Edit only solution.py.

@@ -1,0 +1,15 @@
+id: solve-transpose-no-index
+axis: solve
+split: holdout
+output: solution.py
+check: "{python} -m pytest -q tests"
+prompt: |
+  Implement `transpose(matrix)` in solution.py. matrix is a rectangular list of lists of
+  integers (possibly empty). Return its transpose as a list of lists; transpose([]) is [].
+
+  Rules (checked automatically by parsing your code):
+  - no subscripting of any kind (no x[i], x[i:j], and no subscripted type hints)
+  - no zip()
+  - no import statements
+
+  Hidden tests check correctness. Edit only solution.py.

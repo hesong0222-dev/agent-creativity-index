@@ -1,0 +1,17 @@
+id: solve-fizzbuzz-no-branch
+axis: solve
+split: dev
+output: solution.py
+check: "{python} -m pytest -q tests"
+prompt: |
+  Implement `fizzbuzz(n)` in solution.py. It returns a list of strings for the numbers 1 to n:
+  "Fizz" for multiples of 3, "Buzz" for multiples of 5, "FizzBuzz" for multiples of both,
+  and the number itself otherwise. fizzbuzz(0) returns an empty list.
+
+  Rules (checked automatically by parsing your code):
+  - no if/elif/else statements, no conditional expressions (x if c else y), no match
+  - no `and` / `or`, no comparison operators (<, >, ==, !=, in, is, ...)
+  - no `if` clauses inside comprehensions
+  - no import statements
+
+  Hidden tests check correctness. Edit only solution.py.

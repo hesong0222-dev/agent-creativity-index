@@ -1,0 +1,15 @@
+id: solve-count-vowels-no-loops
+axis: solve
+split: holdout
+output: solution.py
+check: "{python} -m pytest -q tests"
+prompt: |
+  Implement `count_vowels(text)` in solution.py. Return how many characters of text are
+  vowels (a, e, i, o, u), ignoring case. "y" is not a vowel.
+
+  Rules (checked automatically by parsing your code):
+  - no for or while loops, and no comprehensions or generator expressions
+  - no .count() and no sum()
+  - no import statements
+
+  Hidden tests check correctness. Edit only solution.py.

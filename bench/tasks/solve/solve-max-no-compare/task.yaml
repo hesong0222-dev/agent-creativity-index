@@ -1,0 +1,16 @@
+id: solve-max-no-compare
+axis: solve
+split: dev
+output: solution.py
+check: "{python} -m pytest -q tests"
+prompt: |
+  Implement `largest(values)` in solution.py. It takes a non-empty list of integers between
+  -1,000,000,000 and 1,000,000,000 and returns the largest one.
+
+  Rules (checked automatically by parsing your code):
+  - no comparison operators (<, >, ==, !=, in, is, ...)
+  - no if statements, conditional expressions, `and` / `or`
+  - no max(), min(), sorted(), .sort()
+  - no import statements
+
+  Hidden tests check correctness. Edit only solution.py.
