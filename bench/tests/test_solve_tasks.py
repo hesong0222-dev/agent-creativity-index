@@ -16,8 +16,8 @@ def prepared(task, tmp_path, source):
     return work
 
 
-def test_eight_solve_tasks():
-    assert len(SOLVE) == 8
+def test_twenty_solve_tasks():
+    assert len(SOLVE) == 20
 
 
 @pytest.mark.parametrize("task", SOLVE, ids=lambda t: t.id)
