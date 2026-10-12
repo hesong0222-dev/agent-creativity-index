@@ -1,0 +1,6 @@
+# Claude judge, isolated like the agents. Same family as Claude agents: fine for A/A checks,
+# but prefer a different-family judge (judge-codex.yaml) when measuring a skill's effect.
+name: claude-judge
+cmd: >-
+  claude -p --setting-sources project --strict-mcp-config < {judge_prompt_file}
+timeout: 300
