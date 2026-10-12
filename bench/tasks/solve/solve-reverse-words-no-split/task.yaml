@@ -13,5 +13,6 @@ prompt: |
   - no .split(), .rsplit(), .partition(), .rpartition(), .reverse()
   - no reversed(), no slices with a step (such as [::-1])
   - no import statements
+  - no eval, exec, compile, getattr, setattr, __import__, globals, locals, vars, or open
 
   Hidden tests check correctness. Edit only solution.py.

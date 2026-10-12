@@ -2,5 +2,5 @@
 name: claude-skill
 cmd: >-
   claude -p --setting-sources project --strict-mcp-config
-  --plugin-dir {repo_root} --dangerously-skip-permissions < {prompt_file}
+  --plugin-dir {plugin_dir} --dangerously-skip-permissions < {prompt_file}
 timeout: 900

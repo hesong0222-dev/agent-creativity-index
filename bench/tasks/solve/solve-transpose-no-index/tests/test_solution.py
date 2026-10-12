@@ -24,3 +24,7 @@ def test_values():
     assert solution.transpose([[1, 2, 3], [4, 5, 6]]) == [[1, 4], [2, 5], [3, 6]]
     m = [[r * 10 + c for c in range(7)] for r in range(5)]
     assert solution.transpose(m) == [list(col) for col in zip(*m)]
+
+
+def test_no_dynamic_code():
+    assert not NAMES & {"eval", "exec", "compile", "getattr", "setattr", "__import__", "globals", "locals", "vars", "open"}

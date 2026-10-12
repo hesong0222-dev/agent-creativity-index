@@ -47,12 +47,23 @@ def family(cmd: str) -> str:
 
 def summarize(run_dir: Path, tasks: list[Task], n_boot: int = 2000, seed: int = 0) -> dict:
     by_axis: dict[str, dict[str, list[float]]] = {}
-    counts = {axis: {"pairs": 0, "judged": 0, "B": 0, "A": 0, "tie": 0, "parse_failures": 0} for axis in AXES}
+    counts = {axis: {"pairs": 0, "judged": 0, "B": 0, "A": 0, "tie": 0, "parse_failures": 0, "failed_pairs": 0}
+              for axis in AXES}
+    judge_path = run_dir / "judge.json"
+    judge = json.loads(judge_path.read_text()) if judge_path.exists() else {}
+    want = {k: judge[k] for k in ("a", "b") if k in judge}
+    if "name" in judge:
+        want["judge"] = judge["name"]
     for task in tasks:
-        records = read_jsonl(run_dir / task.id / "judgments.jsonl")
+        # only verdicts for the pairing and judge in judge.json; later records override earlier ones
+        latest = {r["sample"] if "sample" in r else i: r
+                  for i, r in enumerate(read_jsonl(run_dir / task.id / "judgments.jsonl"))
+                  if all(r.get(k, v) == v for k, v in want.items())}
+        c = counts[task.axis]
+        c["failed_pairs"] += sum(1 for r in latest.values() if not r["winner"])
+        records = [r for r in latest.values() if r["winner"]]
         if not records:
             continue
-        c = counts[task.axis]
         for r in records:
             c["pairs"] += 1
             c[r["winner"]] += 1
@@ -90,6 +101,9 @@ def _run_stats(run_dir: Path, tasks: list[Task]) -> dict:
 
 def _warnings(run_dir: Path, summary: dict) -> list[str]:
     out = []
+    failed = sum(v["failed_pairs"] for v in summary["axes"].values())
+    if failed:
+        out.append(f"{failed} pairs could not be judged (judge gave no verdict); re-run `aci judge` to retry them")
     missing = [axis for axis, v in summary["axes"].items() if v["pairs"] == 0]
     if missing:
         out.append(f"no judgments for axes: {', '.join(missing)}; the index averages the rest")

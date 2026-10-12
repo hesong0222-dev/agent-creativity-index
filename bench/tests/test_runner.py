@@ -1,3 +1,5 @@
+import time
+
 from aci.adapter import Config, render, run_shell
 from aci.runner import run_sample, sample_dir
 from aci.tasks import Task
@@ -71,3 +73,41 @@ def test_solve_check_uses_hidden_tests(tmp_path):
     good = run_sample(task, Config(name="good", cmd="echo 'V = 1' > solution.py"), 0, tmp_path / "out", tmp_path)
     bad = run_sample(task, Config(name="bad", cmd="echo 'V = 2' > solution.py"), 0, tmp_path / "out", tmp_path)
     assert good["passed"] is True and bad["passed"] is False
+
+
+def test_failed_sample_is_retried_on_resume(tmp_path):
+    task = make_task(tmp_path)
+    flag = tmp_path / "flag"
+    cfg = Config(name="c", cmd="test -f " + str(flag) + " && echo ok > {output} || exit 3")
+    out = tmp_path / "out"
+    assert run_sample(task, cfg, 0, out, tmp_path)["has_output"] is False
+    flag.write_text("x")
+    assert run_sample(task, cfg, 0, out, tmp_path)["has_output"] is True
+
+
+def test_plugin_dir_holds_only_plugin_files(tmp_path):
+    repo = tmp_path / "repo"
+    (repo / ".claude-plugin").mkdir(parents=True)
+    (repo / ".claude-plugin" / "plugin.json").write_text("{}")
+    (repo / "skills" / "s").mkdir(parents=True)
+    (repo / "bench").mkdir()
+    run_sample(make_task(tmp_path), Config(name="p", cmd="ls -A {plugin_dir} > {output}"), 0, tmp_path / "out", repo)
+    listing = (sample_dir(tmp_path / "out", "t1", "p", 0) / "output" / "answer.md").read_text().split()
+    assert listing == [".claude-plugin", "skills"]
+
+
+def test_detached_child_does_not_hang_timeout(tmp_path):
+    cmd = "python3 -c 'import os,time; os.setsid(); time.sleep(30)' & sleep 30"
+    start = time.monotonic()
+    code, out, err, timed_out = run_shell(Config(name="s", cmd=cmd, timeout=1), {}, tmp_path)
+    assert timed_out and time.monotonic() - start < 10
+
+
+def test_agent_conftest_cannot_force_pass(tmp_path):
+    task = make_task(tmp_path, output="solution.py", axis="solve", check="{python} -m pytest -q tests")
+    (task.dir / "tests").mkdir()
+    (task.dir / "tests" / "test_s.py").write_text("import solution\n\n\ndef test_v():\n    assert solution.V == 1\n")
+    forge = ("import pytest\n\n\n@pytest.hookimpl(hookwrapper=True)\ndef pytest_runtest_makereport(item, call):\n"
+             "    outcome = yield\n    outcome.get_result().outcome = 'passed'\n")
+    cmd = "echo 'V = 2' > solution.py && mkdir -p tests && cat > conftest.py <<'X'\n" + forge + "X\ncp conftest.py tests/conftest.py"
+    assert run_sample(task, Config(name="cheat", cmd=cmd), 0, tmp_path / "out", tmp_path)["passed"] is False

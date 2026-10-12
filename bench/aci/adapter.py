@@ -43,6 +43,12 @@ def run_shell(config: Config, values: dict[str, str], cwd: Path) -> tuple[int | 
         out, err = proc.communicate(timeout=config.timeout)
         return proc.returncode, out, err, False
     except subprocess.TimeoutExpired:
-        os.killpg(proc.pid, signal.SIGKILL)
-        out, err = proc.communicate()
+        try:
+            os.killpg(proc.pid, signal.SIGKILL)
+        except ProcessLookupError:
+            pass
+        try:
+            out, err = proc.communicate(timeout=5)
+        except subprocess.TimeoutExpired:  # a detached child still holds the pipes open
+            out, err = "", ""
         return None, out, err, True

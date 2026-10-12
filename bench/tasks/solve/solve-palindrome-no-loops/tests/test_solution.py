@@ -27,3 +27,7 @@ def test_values():
     assert not solution.is_palindrome("palindrome")
     assert solution.is_palindrome("ab" * 100 + "ba" * 100)
     assert not solution.is_palindrome("ab" * 200)
+
+
+def test_no_dynamic_code():
+    assert not NAMES & {"eval", "exec", "compile", "getattr", "setattr", "__import__", "globals", "locals", "vars", "open"}

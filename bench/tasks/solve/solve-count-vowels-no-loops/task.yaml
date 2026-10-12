@@ -11,5 +11,6 @@ prompt: |
   - no for or while loops, and no comprehensions or generator expressions
   - no .count() and no sum()
   - no import statements
+  - no eval, exec, compile, getattr, setattr, __import__, globals, locals, vars, or open
 
   Hidden tests check correctness. Edit only solution.py.

@@ -58,12 +58,12 @@ An agent or judge is a shell command template in YAML:
 
 ```yaml
 name: claude-skill
-cmd: claude -p --plugin-dir {repo_root} --dangerously-skip-permissions < {prompt_file}
+cmd: claude -p --plugin-dir {plugin_dir} --dangerously-skip-permissions < {prompt_file}
 timeout: 900
 env: {}
 ```
 
-Agent placeholders: `{prompt_file}`, `{workdir}`, `{repo_root}`, `{output}`. Judge
+Agent placeholders: `{prompt_file}`, `{workdir}`, `{repo_root}`, `{output}`, and `{plugin_dir}` (a temporary copy of only `.claude-plugin/` and `skills/`, so the agent never sees the tasks or answers). Judge
 placeholders: `{judge_prompt_file}`, `{verdict_file}`. Commands run in a fresh temporary
 directory; hidden tests are copied in only after the agent finishes.
 

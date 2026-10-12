@@ -11,5 +11,6 @@ prompt: |
   - no subscripting of any kind (no x[i], x[i:j], and no subscripted type hints)
   - no zip()
   - no import statements
+  - no eval, exec, compile, getattr, setattr, __import__, globals, locals, vars, or open
 
   Hidden tests check correctness. Edit only solution.py.

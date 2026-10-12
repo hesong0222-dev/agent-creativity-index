@@ -43,3 +43,16 @@ def test_summarize_with_missing_axis_and_family_warning(tmp_path):
 def test_summarize_empty(tmp_path):
     s = summarize(tmp_path, [], n_boot=10)
     assert s["index"] is None and "Index: n/a" in render_markdown(s, "dev")
+
+
+def test_failed_judgments_and_other_pairings_are_excluded(tmp_path):
+    tasks = [Task("m1", "make", "holdout", "p", "o.md", tmp_path)]
+    run = tmp_path / "run"
+    (run / "m1").mkdir(parents=True)
+    rows = [{"winner": None, "auto": False, "parse_failures": 2, "a": "x", "b": "y", "judge": "j"},
+            {"winner": "A", "auto": False, "parse_failures": 0, "a": "y", "b": "x", "judge": "j"}]
+    (run / "m1" / "judgments.jsonl").write_text("".join(json.dumps(r) + "\n" for r in rows))
+    (run / "judge.json").write_text(json.dumps({"name": "j", "cmd": "codex exec", "a": "x", "b": "y"}))
+    s = summarize(run, tasks, n_boot=10)
+    assert s["index"] is None and s["axes"]["make"]["failed_pairs"] == 1
+    assert any("could not be judged" in w for w in s["warnings"])

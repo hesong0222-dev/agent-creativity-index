@@ -29,3 +29,7 @@ def test_sorts_random_lists():
 
 def test_duplicates_and_bounds():
     assert solution.sort_numbers([1000, 0, 1000, 0, 5]) == [0, 0, 5, 1000, 1000]
+
+
+def test_no_dynamic_code():
+    assert not NAMES & {"eval", "exec", "compile", "getattr", "setattr", "__import__", "globals", "locals", "vars", "open"}

@@ -24,12 +24,19 @@ CRITERIA = {
 
 
 def parse_verdict(text: str) -> str | None:
-    for match in reversed(list(re.finditer(r"\{[^{}]*\}", text or ""))):
+    text = text or ""
+    decoder = json.JSONDecoder()
+    for start in reversed([m.start() for m in re.finditer(r"\{", text)]):
         try:
-            obj = json.loads(match.group(0))
+            obj, _ = decoder.raw_decode(text, start)
         except json.JSONDecodeError:
             continue
-        winner = str(obj.get("winner", "")).strip().lower()
+        if not isinstance(obj, dict):
+            continue
+        winner = obj.get("winner")
+        if isinstance(winner, float) and winner.is_integer():
+            winner = int(winner)
+        winner = str(winner).strip().lower()
         if winner in VERDICTS:
             return winner
     return None
@@ -109,7 +116,8 @@ def judge_pair(task: Task, a_dir: Path, b_dir: Path, judge: Config) -> dict:
     out_a, out_b = read_output(a_dir), read_output(b_dir)
     first, raw_first = call_judge(judge, build_prompt(task, out_a, out_b))
     second, raw_second = call_judge(judge, build_prompt(task, out_b, out_a))
-    record.update(winner=combine(first, second), parse_failures=(first is None) + (second is None),
+    winner = None if first is None and second is None else combine(first, second)  # None: judge never answered
+    record.update(winner=winner, parse_failures=(first is None) + (second is None),
                   raw=[raw_first[-2000:], raw_second[-2000:]])
     return record
 
@@ -128,8 +136,10 @@ def judge_run(run_dir: Path, tasks: list[Task], a: str, b: str, judge: Config,
         a_root = run_dir / task.id / a
         if not a_root.is_dir():
             continue
-        done = {r["sample"] for r in read_jsonl(run_dir / task.id / "judgments.jsonl")}
-        for a_dir in sorted(a_root.iterdir(), key=lambda p: int(p.name)):
+        done = {r["sample"] for r in read_jsonl(run_dir / task.id / "judgments.jsonl")
+                if r.get("winner") and (r.get("a"), r.get("b"), r.get("judge")) == (a, b, judge.name)}
+        samples = [p for p in a_root.iterdir() if p.is_dir() and p.name.isdigit()]
+        for a_dir in sorted(samples, key=lambda p: int(p.name)):
             b_dir = run_dir / task.id / b / a_dir.name
             if int(a_dir.name) in done or not (a_dir / "meta.json").exists() or not (b_dir / "meta.json").exists():
                 continue
@@ -139,10 +149,11 @@ def judge_run(run_dir: Path, tasks: list[Task], a: str, b: str, judge: Config,
 
     def one(item):
         task, a_dir, b_dir = item
-        record = {"task": task.id, "axis": task.axis, "a": a, "b": b, **judge_pair(task, a_dir, b_dir, judge)}
+        record = {"task": task.id, "axis": task.axis, "a": a, "b": b, "judge": judge.name,
+                  **judge_pair(task, a_dir, b_dir, judge)}
         with lock, (run_dir / task.id / "judgments.jsonl").open("a") as f:
             f.write(json.dumps(record) + "\n")
-        log(f"{task.id} #{record['sample']}: {record['winner']}{' (auto)' if record['auto'] else ''}")
+        log(f"{task.id} #{record['sample']}: {record['winner'] or 'judge failed'}{' (auto)' if record['auto'] else ''}")
         return record
 
     with ThreadPoolExecutor(max_workers=jobs) as pool:

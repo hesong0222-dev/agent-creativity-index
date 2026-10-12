@@ -26,3 +26,7 @@ def test_values():
     assert solution.reverse_words("single") == "single"
     assert solution.reverse_words("") == ""
     assert solution.reverse_words("   ") == ""
+
+
+def test_no_dynamic_code():
+    assert not NAMES & {"eval", "exec", "compile", "getattr", "setattr", "__import__", "globals", "locals", "vars", "open"}

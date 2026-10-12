@@ -79,4 +79,30 @@ def test_judge_reads_verdict_file_and_counts_parse_failures(tmp_path):
     assert judge_run(run, [task], "A", "B", file_judge, log=lambda m: None)[0]["winner"] == "tie"
     task2, run2 = make_run(tmp_path / "second")
     broken = judge_run(run2, [task2], "A", "B", Config(name="b", cmd="echo nope"), log=lambda m: None)[0]
-    assert broken["winner"] == "tie" and broken["parse_failures"] == 2
+    assert broken["winner"] is None and broken["parse_failures"] == 2
+
+
+def test_parse_verdict_with_braces_in_reason_and_float_winner():
+    assert parse_verdict('{"winner": 2, "reason": "returns {} early"}') == "2"
+    assert parse_verdict('{"winner": 1.0}') == "1"
+
+
+def test_fully_failed_judge_is_not_a_tie_and_is_retried(tmp_path):
+    task, run = make_run(tmp_path)
+    broken = judge_run(run, [task], "A", "B", Config(name="b", cmd="exit 1"), log=lambda m: None)[0]
+    assert broken["winner"] is None
+    again = judge_run(run, [task], "A", "B", Config(name="b", cmd=PICK_GOOD), log=lambda m: None)
+    assert [r["winner"] for r in again] == ["B"]
+
+
+def test_changed_pairing_is_judged_fresh(tmp_path):
+    task, run = make_run(tmp_path)
+    judge_run(run, [task], "A", "B", Config(name="j", cmd=PICK_GOOD), log=lambda m: None)
+    swapped = judge_run(run, [task], "B", "A", Config(name="j", cmd=PICK_GOOD), log=lambda m: None)
+    assert [r["winner"] for r in swapped] == ["A"]
+
+
+def test_non_numeric_entries_are_ignored(tmp_path):
+    task, run = make_run(tmp_path)
+    (run / "t" / "A" / ".DS_Store").write_text("x")
+    assert len(judge_run(run, [task], "A", "B", Config(name="j", cmd=PICK_GOOD), log=lambda m: None)) == 1

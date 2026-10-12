@@ -21,6 +21,9 @@ def sample_dir(out: Path, task_id: str, config_name: str, i: int) -> Path:
 
 def run_check(task: Task, workdir: Path) -> bool:
     """Copy the hidden tests into workdir and run the task's check command."""
+    shutil.rmtree(workdir / "tests", ignore_errors=True)  # nothing the agent left may shape the check
+    for conftest in workdir.rglob("conftest.py"):
+        conftest.unlink()
     if (task.dir / "tests").is_dir():
         shutil.copytree(task.dir / "tests", workdir / "tests", dirs_exist_ok=True)
     cmd = render(task.check, {"python": sys.executable})
@@ -35,18 +38,25 @@ def run_sample(task: Task, config: Config, i: int, out: Path, repo_root: Path) -
     d = sample_dir(out, task.id, config.name, i)
     meta_path = d / "meta.json"
     if meta_path.exists():
-        return json.loads(meta_path.read_text())
+        meta = json.loads(meta_path.read_text())
+        if meta["has_output"] or (meta["exit_code"] == 0 and not meta["timed_out"]):
+            return meta  # finished; a crash with no output is retried instead
+
     if d.exists():
         shutil.rmtree(d)  # leftover from an interrupted run
     d.mkdir(parents=True)
     prompt_file = d / "prompt.md"
     prompt_file.write_text(task.prompt)
     workdir = Path(tempfile.mkdtemp(prefix="aci-"))
+    plugin_dir = Path(tempfile.mkdtemp(prefix="aci-plugin-"))
     try:
+        for part in (".claude-plugin", "skills"):  # the plugin only, never the tasks or answers
+            if (repo_root / part).is_dir():
+                shutil.copytree(repo_root / part, plugin_dir / part)
         if (task.dir / "starter").is_dir():
             shutil.copytree(task.dir / "starter", workdir, dirs_exist_ok=True)
         values = {"prompt_file": str(prompt_file.resolve()), "workdir": str(workdir),
-                  "repo_root": str(repo_root.resolve()), "output": task.output}
+                  "repo_root": str(repo_root.resolve()), "plugin_dir": str(plugin_dir), "output": task.output}
         start = time.monotonic()
         exit_code, stdout, stderr, timed_out = run_shell(config, values, workdir)
         duration = round(time.monotonic() - start, 1)
@@ -68,6 +78,7 @@ def run_sample(task: Task, config: Config, i: int, out: Path, repo_root: Path) -
         return meta
     finally:
         shutil.rmtree(workdir, ignore_errors=True)
+        shutil.rmtree(plugin_dir, ignore_errors=True)
 
 
 def run_all(tasks: list[Task], configs: list[Config], k: int, out: Path, repo_root: Path,

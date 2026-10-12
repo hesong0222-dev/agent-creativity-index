@@ -10,5 +10,6 @@ prompt: |
   - no arithmetic operators: +, -, *, /, //, %, ** (including +=, -= and unary minus)
   - no sum(), and no attribute whose name contains "add" or "sub" (such as __add__)
   - no import statements
+  - no eval, exec, compile, getattr, setattr, __import__, globals, locals, vars, or open
 
   Hidden tests check correctness. Edit only solution.py.

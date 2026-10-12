@@ -12,5 +12,6 @@ prompt: |
   - no if statements, conditional expressions, `and` / `or`
   - no max(), min(), sorted(), .sort()
   - no import statements
+  - no eval, exec, compile, getattr, setattr, __import__, globals, locals, vars, or open
 
   Hidden tests check correctness. Edit only solution.py.

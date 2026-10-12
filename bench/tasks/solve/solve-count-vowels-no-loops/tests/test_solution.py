@@ -25,3 +25,7 @@ def test_values():
     assert solution.count_vowels("AEIOU aeiou") == 10
     assert solution.count_vowels("Hello, World!") == 3
     assert solution.count_vowels("The quick brown fox jumps over the lazy dog. " * 50) == 11 * 50
+
+
+def test_no_dynamic_code():
+    assert not NAMES & {"eval", "exec", "compile", "getattr", "setattr", "__import__", "globals", "locals", "vars", "open"}

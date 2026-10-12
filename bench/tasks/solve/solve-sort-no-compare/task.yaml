@@ -11,5 +11,6 @@ prompt: |
   - no comparison operators at all (<, >, <=, >=, ==, !=, in, not in, is, is not)
   - no sorted(), .sort(), min(), or max()
   - no import statements
+  - no eval, exec, compile, getattr, setattr, __import__, globals, locals, vars, or open
 
   Hidden tests check correctness. Edit only solution.py.

@@ -29,3 +29,7 @@ def test_values():
     assert solution.fizzbuzz(15)[-1] == "FizzBuzz"
     for n in (0, 1, 15, 100):
         assert solution.fizzbuzz(n) == expected(n)
+
+
+def test_no_dynamic_code():
+    assert not NAMES & {"eval", "exec", "compile", "getattr", "setattr", "__import__", "globals", "locals", "vars", "open"}

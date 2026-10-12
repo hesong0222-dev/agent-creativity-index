@@ -27,3 +27,7 @@ def test_values():
     for _ in range(200):
         vals = [rng.randint(-10**9, 10**9) for _ in range(rng.randint(1, 50))]
         assert solution.largest(vals) == max(vals)
+
+
+def test_no_dynamic_code():
+    assert not NAMES & {"eval", "exec", "compile", "getattr", "setattr", "__import__", "globals", "locals", "vars", "open"}

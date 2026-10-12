@@ -25,3 +25,10 @@ def test_reference_passes_while_starter_and_obvious_fail(task, tmp_path):
     assert run_check(task, prepared(task, tmp_path, "reference"))
     assert not run_check(task, prepared(task, tmp_path, "starter"))
     assert not run_check(task, prepared(task, tmp_path, "obvious"))
+
+
+@pytest.mark.parametrize("task", SOLVE, ids=lambda t: t.id)
+def test_obvious_solution_smuggled_through_exec_fails(task, tmp_path):
+    work = prepared(task, tmp_path, "starter")
+    (work / "solution.py").write_text(f"exec({(task.dir / 'obvious.py').read_text()!r})\n")
+    assert not run_check(task, work)

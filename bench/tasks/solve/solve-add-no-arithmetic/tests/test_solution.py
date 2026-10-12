@@ -30,3 +30,7 @@ def test_values():
     for _ in range(500):
         a, b = rng.randint(0, 10**6), rng.randint(0, 10**6)
         assert solution.add(a, b) == a + b
+
+
+def test_no_dynamic_code():
+    assert not NAMES & {"eval", "exec", "compile", "getattr", "setattr", "__import__", "globals", "locals", "vars", "open"}

@@ -13,5 +13,6 @@ prompt: |
   - no `and` / `or`, no comparison operators (<, >, ==, !=, in, is, ...)
   - no `if` clauses inside comprehensions
   - no import statements
+  - no eval, exec, compile, getattr, setattr, __import__, globals, locals, vars, or open
 
   Hidden tests check correctness. Edit only solution.py.
