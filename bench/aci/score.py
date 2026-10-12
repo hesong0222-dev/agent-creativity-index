@@ -45,7 +45,8 @@ def family(cmd: str) -> str:
     return ""
 
 
-def summarize(run_dir: Path, tasks: list[Task], n_boot: int = 2000, seed: int = 0) -> dict:
+def summarize(run_dir: Path, tasks: list[Task], n_boot: int = 2000, seed: int = 0,
+              a: str | None = None, b: str | None = None) -> dict:
     by_axis: dict[str, dict[str, list[float]]] = {}
     counts = {axis: {"pairs": 0, "judged": 0, "B": 0, "A": 0, "tie": 0, "parse_failures": 0, "failed_pairs": 0}
               for axis in AXES}
@@ -54,6 +55,10 @@ def summarize(run_dir: Path, tasks: list[Task], n_boot: int = 2000, seed: int = 
     want = {k: judge[k] for k in ("a", "b") if k in judge}
     if "name" in judge:
         want["judge"] = judge["name"]
+    if a:
+        want["a"] = a
+    if b:
+        want["b"] = b
     for task in tasks:
         # only verdicts for the pairing and judge in judge.json; later records override earlier ones
         latest = {r["sample"] if "sample" in r else i: r
@@ -88,8 +93,9 @@ def _run_stats(run_dir: Path, tasks: list[Task]) -> dict:
         for meta_path in sorted((run_dir / task.id).glob("*/*/meta.json")):
             m = json.loads(meta_path.read_text())
             s = stats.setdefault(m["config"], {"samples": 0, "failed": 0, "timed_out": 0, "no_output": 0,
-                                               "solve_samples": 0, "solve_passed": 0})
+                                               "solve_samples": 0, "solve_passed": 0, "duration_total": 0.0})
             s["samples"] += 1
+            s["duration_total"] += m.get("duration") or 0.0
             s["failed"] += int(m["exit_code"] != 0)
             s["timed_out"] += int(m["timed_out"])
             s["no_output"] += int(not m["has_output"])
@@ -132,10 +138,12 @@ def render_markdown(summary: dict, split: str) -> str:
     for axis, v in summary["axes"].items():
         lines.append(f"| {axis} | {_fmt(v['rate'], v['ci'])} | {v['pairs']} | {v['B']} | {v['A']} | {v['tie']} "
                      f"| {v['judged']} | {v['parse_failures']} |")
-    lines += ["", "| config | samples | failed | timed out | no output | solve passed |", "|---|---|---|---|---|---|"]
+    lines += ["", "| config | samples | failed | timed out | no output | solve passed | avg seconds |",
+              "|---|---|---|---|---|---|---|"]
     for name, s in summary["runs"].items():
         solve = f"{s['solve_passed']}/{s['solve_samples']}" if s["solve_samples"] else "n/a"
-        lines.append(f"| {name} | {s['samples']} | {s['failed']} | {s['timed_out']} | {s['no_output']} | {solve} |")
+        lines.append(f"| {name} | {s['samples']} | {s['failed']} | {s['timed_out']} | {s['no_output']} | {solve} "
+                     f"| {s['duration_total'] / s['samples']:.1f} |")
     if summary["warnings"]:
         lines += ["", "## Warnings", ""] + [f"- {w}" for w in summary["warnings"]]
     return "\n".join(lines) + "\n"

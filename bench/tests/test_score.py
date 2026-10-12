@@ -56,3 +56,26 @@ def test_failed_judgments_and_other_pairings_are_excluded(tmp_path):
     s = summarize(run, tasks, n_boot=10)
     assert s["index"] is None and s["axes"]["make"]["failed_pairs"] == 1
     assert any("could not be judged" in w for w in s["warnings"])
+
+
+def test_score_picks_requested_pair(tmp_path):
+    tasks = [Task("m1", "make", "holdout", "p", "o.md", tmp_path)]
+    run = tmp_path / "run"
+    (run / "m1").mkdir(parents=True)
+    rows = [{"sample": 0, "winner": "B", "auto": False, "parse_failures": 0, "a": "x", "b": "y", "judge": "j"},
+            {"sample": 0, "winner": "A", "auto": False, "parse_failures": 0, "a": "x", "b": "z", "judge": "j"}]
+    (run / "m1" / "judgments.jsonl").write_text("".join(json.dumps(r) + "\n" for r in rows))
+    (run / "judge.json").write_text(json.dumps({"name": "j", "cmd": "gemini", "a": "x", "b": "z"}))
+    assert summarize(run, tasks, n_boot=10)["axes"]["make"]["rate"] == 0
+    assert summarize(run, tasks, n_boot=10, a="x", b="y")["axes"]["make"]["rate"] == 100
+
+
+def test_average_duration(tmp_path):
+    tasks = [Task("m1", "make", "holdout", "p", "o.md", tmp_path)]
+    for i, seconds in enumerate((10.0, 20.0)):
+        d = tmp_path / "run" / "m1" / "c" / str(i)
+        d.mkdir(parents=True)
+        (d / "meta.json").write_text(json.dumps({"config": "c", "exit_code": 0, "timed_out": False,
+                                                 "has_output": True, "passed": None, "duration": seconds}))
+    s = summarize(tmp_path / "run", tasks, n_boot=10)
+    assert "| c | 2 | 0 | 0 | 0 | n/a | 15.0 |" in render_markdown(s, "holdout")

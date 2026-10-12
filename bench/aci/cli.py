@@ -40,6 +40,8 @@ def main(argv: list[str] | None = None) -> int:
     score.add_argument("run_dir")
     score.add_argument("--split", choices=SPLITS, default="holdout")
     score.add_argument("--tasks-dir", default=str(TASKS_ROOT))
+    score.add_argument("--a", help="baseline config name (default: the pair in judge.json)")
+    score.add_argument("--b", help="treatment config name (default: the pair in judge.json)")
 
     doc = sub.add_parser("doctor", help="check that an agent config runs without the user's global setup")
     doc.add_argument("config")
@@ -61,10 +63,11 @@ def main(argv: list[str] | None = None) -> int:
         return 0
     if args.command == "score":
         run_dir = Path(args.run_dir)
-        summary = summarize(run_dir, load_tasks(Path(args.tasks_dir), args.split))
-        (run_dir / "report.json").write_text(json.dumps({"split": args.split, **summary}, indent=2))
+        summary = summarize(run_dir, load_tasks(Path(args.tasks_dir), args.split), a=args.a, b=args.b)
+        name = f"report-{args.a}-vs-{args.b}" if args.a and args.b else "report"  # one report per pair
+        (run_dir / f"{name}.json").write_text(json.dumps({"split": args.split, "a": args.a, "b": args.b, **summary}, indent=2))
         markdown = render_markdown(summary, args.split)
-        (run_dir / "report.md").write_text(markdown)
+        (run_dir / f"{name}.md").write_text(markdown)
         print(markdown)
         return 0
     hits, inventory = doctor(load_config(Path(args.config)), REPO_ROOT, default_forbid() + args.forbid)
