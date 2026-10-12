@@ -124,3 +124,15 @@ def test_agent_conftest_cannot_force_pass(tmp_path):
              "    outcome = yield\n    outcome.get_result().outcome = 'passed'\n")
     cmd = "echo 'V = 2' > solution.py && mkdir -p tests && cat > conftest.py <<'X'\n" + forge + "X\ncp conftest.py tests/conftest.py"
     assert run_sample(task, Config(name="cheat", cmd=cmd), 0, tmp_path / "out", tmp_path)["passed"] is False
+
+
+def test_agent_error_is_retried_even_when_starter_counts_as_output(tmp_path):
+    task = make_task(tmp_path, output="solution.py")
+    (task.dir / "starter").mkdir()
+    (task.dir / "starter" / "solution.py").write_text("raise NotImplementedError\n")
+    flag = tmp_path / "flag"
+    cfg = Config(name="c", cmd="test -f " + str(flag) + " || exit 1")
+    out = tmp_path / "out"
+    assert run_sample(task, cfg, 0, out, tmp_path)["exit_code"] == 1
+    flag.write_text("x")
+    assert run_sample(task, cfg, 0, out, tmp_path)["exit_code"] == 0

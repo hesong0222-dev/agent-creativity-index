@@ -39,8 +39,8 @@ def run_sample(task: Task, config: Config, i: int, out: Path, repo_root: Path) -
     meta_path = d / "meta.json"
     if meta_path.exists():
         meta = json.loads(meta_path.read_text())
-        if meta["has_output"] or (meta["exit_code"] == 0 and not meta["timed_out"]):
-            return meta  # finished; a crash with no output is retried instead
+        if meta["exit_code"] == 0 and not meta["timed_out"]:
+            return meta  # finished; an agent error (usage limit, crash, timeout) is retried instead
 
     if d.exists():
         shutil.rmtree(d)  # leftover from an interrupted run
