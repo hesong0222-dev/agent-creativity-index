@@ -1,0 +1,7 @@
+# Treatment 2: the baseline plus the creative-tournament plugin only.
+name: claude-tournament
+plugin: plugins/creative-tournament
+cmd: >-
+  claude -p --setting-sources project --strict-mcp-config
+  --plugin-dir {plugin_dir} --dangerously-skip-permissions < {prompt_file}
+timeout: 2400

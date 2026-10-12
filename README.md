@@ -32,8 +32,8 @@ uv run aci doctor configs/claude-base.yaml   # confirm the baseline runs without
 Compare a skill against the baseline:
 
 ```bash
-uv run aci run --config configs/claude-base.yaml --config configs/claude-skill.yaml --split holdout -k 3 -j 3 --out runs/my-skill
-uv run aci judge runs/my-skill --a claude-base --b claude-skill --judge configs/judge-codex.yaml -j 3
+uv run aci run --config configs/claude-base.yaml --config configs/claude-thinking.yaml --split holdout -k 3 -j 3 --out runs/my-skill
+uv run aci judge runs/my-skill --a claude-base --b claude-thinking --judge configs/judge-codex.yaml -j 3
 uv run aci score runs/my-skill --split holdout
 ```
 
@@ -57,13 +57,14 @@ stopped.
 An agent or judge is a shell command template in YAML:
 
 ```yaml
-name: claude-skill
+name: claude-thinking
+plugin: plugins/creative-thinking   # optional: folder handed to the agent as {plugin_dir}
 cmd: claude -p --plugin-dir {plugin_dir} --dangerously-skip-permissions < {prompt_file}
 timeout: 900
 env: {}
 ```
 
-Agent placeholders: `{prompt_file}`, `{workdir}`, `{repo_root}`, `{output}`, and `{plugin_dir}` (a temporary copy of only `.claude-plugin/` and `skills/`, so the agent never sees the tasks or answers). Judge
+Agent placeholders: `{prompt_file}`, `{workdir}`, `{repo_root}`, `{output}`, and `{plugin_dir}` (a temporary copy of only the config's `plugin:` folder, so the agent never sees the tasks or answers). Judge
 placeholders: `{judge_prompt_file}`, `{verdict_file}`. Commands run in a fresh temporary
 directory; hidden tests are copied in only after the agent finishes.
 

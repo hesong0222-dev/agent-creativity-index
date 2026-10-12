@@ -16,6 +16,7 @@ class Config:
     cmd: str
     timeout: int = 900
     env: dict[str, str] = field(default_factory=dict)
+    plugin: str | None = None  # repo-relative plugin folder handed to the agent as {plugin_dir}
 
 
 def load_config(path: Path) -> Config:
@@ -23,7 +24,8 @@ def load_config(path: Path) -> Config:
     if not data.get("name") or not data.get("cmd"):
         raise ValueError(f"{path}: config needs 'name' and 'cmd'")
     env = {k: str(v) for k, v in (data.get("env") or {}).items()}
-    return Config(name=data["name"], cmd=data["cmd"], timeout=int(data.get("timeout", 900)), env=env)
+    return Config(name=data["name"], cmd=data["cmd"], timeout=int(data.get("timeout", 900)), env=env,
+                  plugin=data.get("plugin"))
 
 
 def render(template: str, values: dict[str, str], quote: bool = True) -> str:

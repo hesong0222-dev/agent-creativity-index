@@ -1,0 +1,11 @@
+{
+  "name": "creative-thinking",
+  "version": "0.1.0",
+  "license": "AGPL-3.0-or-later",
+  "description": "A thinking procedure that steers an agent away from the obvious answer on open-ended work",
+  "author": {
+    "name": "hesong0222-dev",
+    "url": "https://github.com/hesong0222-dev"
+  },
+  "repository": "https://github.com/hesong0222-dev/agent-creativity-index"
+}

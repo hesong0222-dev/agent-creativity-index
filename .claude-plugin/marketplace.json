@@ -1,0 +1,19 @@
+{
+  "name": "agent-creativity-index",
+  "owner": {
+    "name": "hesong0222-dev",
+    "url": "https://github.com/hesong0222-dev"
+  },
+  "plugins": [
+    {
+      "name": "creative-thinking",
+      "source": "./plugins/creative-thinking",
+      "description": "A thinking procedure that steers an agent away from the obvious answer on open-ended work"
+    },
+    {
+      "name": "creative-tournament",
+      "source": "./plugins/creative-tournament",
+      "description": "Three subagents build rival versions from different angles; a blind selector keeps the most original"
+    }
+  ]
+}

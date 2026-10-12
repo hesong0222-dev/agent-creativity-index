@@ -1,5 +1,6 @@
-# Treatment: the baseline plus this repository loaded as a plugin.
-name: claude-skill
+# Treatment 1: the baseline plus the creative-thinking plugin only.
+name: claude-thinking
+plugin: plugins/creative-thinking
 cmd: >-
   claude -p --setting-sources project --strict-mcp-config
   --plugin-dir {plugin_dir} --dangerously-skip-permissions < {prompt_file}

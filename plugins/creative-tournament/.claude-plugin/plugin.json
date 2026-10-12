@@ -1,0 +1,11 @@
+{
+  "name": "creative-tournament",
+  "version": "0.1.0",
+  "license": "AGPL-3.0-or-later",
+  "description": "Three subagents build rival versions from different angles; a blind selector keeps the most original",
+  "author": {
+    "name": "hesong0222-dev",
+    "url": "https://github.com/hesong0222-dev"
+  },
+  "repository": "https://github.com/hesong0222-dev/agent-creativity-index"
+}

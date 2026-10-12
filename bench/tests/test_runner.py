@@ -1,6 +1,6 @@
 import time
 
-from aci.adapter import Config, render, run_shell
+from aci.adapter import Config, load_config, render, run_shell
 from aci.runner import run_sample, sample_dir
 from aci.tasks import Task
 
@@ -85,15 +85,28 @@ def test_failed_sample_is_retried_on_resume(tmp_path):
     assert run_sample(task, cfg, 0, out, tmp_path)["has_output"] is True
 
 
-def test_plugin_dir_holds_only_plugin_files(tmp_path):
+def test_plugin_dir_holds_only_the_configured_plugin(tmp_path):
     repo = tmp_path / "repo"
-    (repo / ".claude-plugin").mkdir(parents=True)
-    (repo / ".claude-plugin" / "plugin.json").write_text("{}")
-    (repo / "skills" / "s").mkdir(parents=True)
+    (repo / "plugins" / "p" / ".claude-plugin").mkdir(parents=True)
+    (repo / "plugins" / "p" / "skills").mkdir()
+    (repo / "plugins" / "q").mkdir()
     (repo / "bench").mkdir()
-    run_sample(make_task(tmp_path), Config(name="p", cmd="ls -A {plugin_dir} > {output}"), 0, tmp_path / "out", repo)
+    cfg = Config(name="p", cmd="ls -A {plugin_dir} > {output}", plugin="plugins/p")
+    run_sample(make_task(tmp_path), cfg, 0, tmp_path / "out", repo)
     listing = (sample_dir(tmp_path / "out", "t1", "p", 0) / "output" / "answer.md").read_text().split()
     assert listing == [".claude-plugin", "skills"]
+
+
+def test_no_plugin_gives_empty_dir(tmp_path):
+    cfg = Config(name="n", cmd="ls -A {plugin_dir} > {output}")
+    run_sample(make_task(tmp_path), cfg, 0, tmp_path / "out", tmp_path)
+    assert (sample_dir(tmp_path / "out", "t1", "n", 0) / "output" / "answer.md").read_text() == ""
+
+
+def test_load_config_reads_plugin(tmp_path):
+    path = tmp_path / "c.yaml"
+    path.write_text("name: c\ncmd: echo\nplugin: plugins/p\n")
+    assert load_config(path).plugin == "plugins/p"
 
 
 def test_detached_child_does_not_hang_timeout(tmp_path):

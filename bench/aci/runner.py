@@ -50,9 +50,8 @@ def run_sample(task: Task, config: Config, i: int, out: Path, repo_root: Path) -
     workdir = Path(tempfile.mkdtemp(prefix="aci-"))
     plugin_dir = Path(tempfile.mkdtemp(prefix="aci-plugin-"))
     try:
-        for part in (".claude-plugin", "skills"):  # the plugin only, never the tasks or answers
-            if (repo_root / part).is_dir():
-                shutil.copytree(repo_root / part, plugin_dir / part)
+        if config.plugin:  # only the configured plugin, never the tasks or answers
+            shutil.copytree(repo_root / config.plugin, plugin_dir, dirs_exist_ok=True)
         if (task.dir / "starter").is_dir():
             shutil.copytree(task.dir / "starter", workdir, dirs_exist_ok=True)
         values = {"prompt_file": str(prompt_file.resolve()), "workdir": str(workdir),
