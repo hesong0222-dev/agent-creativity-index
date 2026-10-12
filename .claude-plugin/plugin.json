@@ -1,0 +1,8 @@
+{
+  "name": "agent-creativity-index",
+  "version": "0.1.0",
+  "license": "AGPL-3.0-or-later",
+  "description": "Agent Creativity Index: a benchmark and a creativity skill for coding agents",
+  "author": { "name": "hesong0222-dev", "url": "https://github.com/hesong0222-dev" },
+  "repository": "https://github.com/hesong0222-dev/agent-creativity-index"
+}

@@ -1,0 +1,20 @@
+[project]
+name = "aci"
+version = "0.1.0"
+description = "Agent Creativity Index"
+requires-python = ">=3.11"
+license = "AGPL-3.0-or-later"
+dependencies = ["pyyaml>=6", "pytest>=8"]
+
+[project.scripts]
+aci = "aci.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["aci"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]  # tasks/*/tests are run per sample by the runner, not collected here
