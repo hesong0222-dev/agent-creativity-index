@@ -4,3 +4,4 @@ bench/.claude-isolated/
 __pycache__/
 *.pyc
 .DS_Store
+.omc/
