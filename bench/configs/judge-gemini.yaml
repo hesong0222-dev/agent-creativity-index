@@ -1,0 +1,6 @@
+# Judge from a different model family than the Claude agents under test.
+# Plan mode keeps the judge read-only; the verdict is read from stdout.
+name: gemini-judge
+cmd: >-
+  gemini --approval-mode plan -o text -p "Follow the instructions above." < {judge_prompt_file}
+timeout: 300
