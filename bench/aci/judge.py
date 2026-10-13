@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import re
 import tempfile
 import threading
@@ -130,7 +131,10 @@ def read_jsonl(path: Path) -> list[dict]:
 
 def judge_run(run_dir: Path, tasks: list[Task], a: str, b: str, judge: Config,
               jobs: int = 1, log=print) -> list[dict]:
-    (run_dir / "judge.json").write_text(json.dumps({"name": judge.name, "cmd": judge.cmd, "a": a, "b": b}, indent=2))
+    # write-then-rename so two judge runs on one folder never leave a half-written file
+    tmp = run_dir / f".judge.{os.getpid()}.json"
+    tmp.write_text(json.dumps({"name": judge.name, "cmd": judge.cmd, "a": a, "b": b}, indent=2))
+    os.replace(tmp, run_dir / "judge.json")
     pending = []
     for task in tasks:
         a_root = run_dir / task.id / a

@@ -8,7 +8,7 @@ description: Use for open-ended work where many answers are valid — generating
 Your first idea is usually everyone's first idea. Before you build anything, spend a minute leaving it behind.
 
 1. **Pin the requirements.** Write each hard requirement of the task as one short line (length, format, file name, rules you must not break). You will check against this list at the end.
-2. **Name the obvious.** Write the three answers most people would give first. You will not build any of them, nor anything in the same direction.
+2. **Name the obvious.** Write the three answers most people would give first. You will not build any of them, nor anything in the same direction. When a constraint rules out the usual method, the well-known workaround for that constraint (the trick most people reach for next) counts as obvious too.
 3. **Sketch distant directions.** Sketch 3 to 5 candidates in one or two lines each, every one reached by a different move:
    - borrow a mechanism from an unrelated field
    - invert a premise the task quietly assumes
